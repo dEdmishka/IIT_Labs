@@ -57,6 +57,3 @@ resource "aws_instance" "web" {
 output "public_ip" {
   value = aws_instance.web_server.public_ip
 }
-
-Key: AKIAYWEBE64ETVIWNDF2
-Secret: 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
