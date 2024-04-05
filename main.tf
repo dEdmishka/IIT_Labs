@@ -45,20 +45,14 @@ resource "aws_instance" "web" {
   key_name = "keyforlab6"
   security_groups = ["${aws_security_group.web.name}"]
 
-  provisioner "remote-exec" {
-    connection {
-       type        = "ssh"
-       user        = "ubuntu"
-       private_key = file("../keyforlab6.pem")
-       host        = self.public_ip
-    }
-    
-    inline = [
-      "sudo yum install -y docker",
-      "sudo systemctl start docker",
-      "sudo systemctl enable docker"
-    ]
-  }
+  user_data = <<-EOF
+              #!/bin/bash
+              sudo yum update -y
+              sudo yum install docker -y
+              sudo systemctl start docker
+              sudo systemctl enable docker
+              sudo usermod -aG docker ec2-user
+              EOF
 
   tags = {
     Name = "lab6_instance"
