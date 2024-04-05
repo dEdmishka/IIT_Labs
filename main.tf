@@ -12,7 +12,7 @@ provider "aws" {
 }
 
 resource "aws_security_group" "web" {
-  name        = "web_sg"
+  name        = "web_sec_gr"
   description = "Allow HTTP traffic"
   
   ingress {
