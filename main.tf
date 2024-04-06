@@ -43,16 +43,8 @@ resource "aws_instance" "web" {
   ami           = data.aws_ami.ubuntu.id
   instance_type = "t2.micro"
   key_name = "keyforlab6"
+  user_data = file("docker.sh")
   security_groups = ["${aws_security_group.web.name}"]
-
-  user_data = <<-EOF
-              #!/bin/bash
-              sudo yum update -y
-              sudo yum install docker -y
-              sudo systemctl start docker
-              sudo systemctl enable docker
-              sudo usermod -aG docker ec2-user
-              EOF
 
   tags = {
     Name = "lab6_instance"
