@@ -1,8 +1,11 @@
 #!/bin/bash
 
-sudo yum install -y yum-utils
-sudo amazon-linux-extras install docker
-sudo service docker start
-sudo usermod -a -G docker ec2-user
-sudo chkconfig docker on
+sudo apt-get update -y
+sudo apt install docker.io -y
+sudo systemctl start docker
 sudo systemctl enable docker
+sudo usermod -aG docker ubuntu
+sudo su -
+docker pull dockermachine321/labiit:latest
+docker run -d -p 80:80 dockermachine321/labiit
+docker run -d --name watchtower --restart=always -v /var/run/docker.sock:/var/run/docker.sock containrrr/watchtower --interval 60
